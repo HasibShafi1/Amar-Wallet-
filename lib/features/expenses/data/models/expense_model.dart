@@ -7,6 +7,8 @@ class ExpenseModel {
   final String description; // Mapped from 'item' in prompt
   final DateTime date;
   final DateTime createdAt;
+  final String walletId;
+  final List<String> tags;
 
   ExpenseModel({
     String? id,
@@ -15,6 +17,8 @@ class ExpenseModel {
     required this.description,
     required this.date,
     DateTime? createdAt,
+    this.walletId = 'default',
+    this.tags = const [],
   })  : id = id ?? const Uuid().v4(),
         createdAt = createdAt ?? DateTime.now();
 
@@ -26,10 +30,11 @@ class ExpenseModel {
       'description': description,
       'date': date.toIso8601String(),
       'createdAt': createdAt.toIso8601String(),
+      'walletId': walletId,
     };
   }
 
-  factory ExpenseModel.fromMap(Map<String, Object?> map) {
+  factory ExpenseModel.fromMap(Map<String, Object?> map, {List<String>? tags}) {
     return ExpenseModel(
       id: map['id'] as String,
       amount: (map['amount'] as num).toDouble(),
@@ -37,6 +42,8 @@ class ExpenseModel {
       description: map['description'] as String,
       date: DateTime.parse(map['date'] as String),
       createdAt: DateTime.parse(map['createdAt'] as String),
+      walletId: (map['walletId'] as String?) ?? 'default',
+      tags: tags ?? [],
     );
   }
 
@@ -47,6 +54,8 @@ class ExpenseModel {
     String? description,
     DateTime? date,
     DateTime? createdAt,
+    String? walletId,
+    List<String>? tags,
   }) {
     return ExpenseModel(
       id: id ?? this.id,
@@ -55,6 +64,8 @@ class ExpenseModel {
       description: description ?? this.description,
       date: date ?? this.date,
       createdAt: createdAt ?? this.createdAt,
+      walletId: walletId ?? this.walletId,
+      tags: tags ?? this.tags,
     );
   }
 }

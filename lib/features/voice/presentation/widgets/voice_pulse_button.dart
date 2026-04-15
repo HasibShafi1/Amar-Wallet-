@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import '../../../../core/constants/theme.dart';
 
 class VoicePulseButton extends StatefulWidget {
   final bool isListening;
+  final bool isContinuous;
   final VoidCallback onTap;
 
   const VoicePulseButton({
     super.key,
     required this.isListening,
+    this.isContinuous = false,
     required this.onTap,
   });
 
@@ -15,111 +16,114 @@ class VoicePulseButton extends StatefulWidget {
   State<VoicePulseButton> createState() => _VoicePulseButtonState();
 }
 
-class _VoicePulseButtonState extends State<VoicePulseButton> with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
+class _VoicePulseButtonState extends State<VoicePulseButton>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _pulseCtrl;
+  late Animation<double> _pulseAnim;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
+    _pulseCtrl = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(milliseconds: 1200),
     );
-    if (widget.isListening) {
-      _controller.repeat();
-    }
+    _pulseAnim = CurvedAnimation(parent: _pulseCtrl, curve: Curves.easeOut);
+    if (widget.isListening) _pulseCtrl.repeat();
   }
 
   @override
-  void didUpdateWidget(covariant VoicePulseButton oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.isListening != oldWidget.isListening) {
+  void didUpdateWidget(covariant VoicePulseButton old) {
+    super.didUpdateWidget(old);
+    if (widget.isListening != old.isListening) {
       if (widget.isListening) {
-        _controller.repeat();
+        _pulseCtrl.repeat();
       } else {
-        _controller.stop();
-        _controller.reset();
+        _pulseCtrl.stop();
+        _pulseCtrl.reset();
       }
     }
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _pulseCtrl.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    final primary = cs.primary;
+    final primaryContainer = cs.primaryContainer;
+    final isRec = widget.isListening || widget.isContinuous;
+    final accentColor = widget.isContinuous ? Colors.red.shade700 : primary;
+
     return GestureDetector(
       onTap: widget.onTap,
       child: AnimatedBuilder(
-        animation: _controller,
+        animation: _pulseAnim,
         builder: (context, child) {
-          return CustomPaint(
-            painter: _PulsePainter(_controller.value, widget.isListening),
-            child: Container(
-              width: 80,
-              height: 80,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: LinearGradient(
-                  colors: [AmarTheme.primary, AmarTheme.primaryContainer],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
+          return Stack(
+            alignment: Alignment.center,
+            children: [
+              // Outer pulse ring
+              if (widget.isListening)
+                Container(
+                  width: 80 + 48 * _pulseAnim.value,
+                  height: 80 + 48 * _pulseAnim.value,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: accentColor.withValues(
+                        alpha: 0.15 * (1 - _pulseAnim.value)),
+                  ),
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 20,
-                    offset: Offset(0, 8),
-                  )
-                ]
+              // Inner pulse ring
+              if (widget.isListening)
+                Container(
+                  width: 80 + 24 * _pulseAnim.value,
+                  height: 80 + 24 * _pulseAnim.value,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: accentColor.withValues(
+                        alpha: 0.20 * (1 - _pulseAnim.value)),
+                  ),
+                ),
+              // Main button
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                width: widget.isListening ? 84 : 76,
+                height: widget.isListening ? 84 : 76,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: LinearGradient(
+                    colors: isRec
+                        ? [Colors.redAccent.shade700, Colors.red.shade400]
+                        : [primary, primaryContainer],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: (isRec ? Colors.red : primary)
+                          .withValues(alpha: 0.4),
+                      blurRadius: isRec ? 24 : 16,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
+                ),
+                child: Icon(
+                  widget.isContinuous
+                      ? Icons.fiber_manual_record
+                      : (widget.isListening ? Icons.stop_rounded : Icons.mic_rounded),
+                  color: Colors.white,
+                  size: 34,
+                ),
               ),
-              child: const Icon(
-                Icons.mic,
-                color: Colors.white,
-                size: 32,
-              ),
-            ),
+            ],
           );
         },
       ),
     );
-  }
-}
-
-class _PulsePainter extends CustomPainter {
-  final double animationValue;
-  final bool isListening;
-
-  _PulsePainter(this.animationValue, this.isListening);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    if (!isListening) return;
-
-    final center = Offset(size.width / 2, size.height / 2);
-    final paint1 = Paint()
-      ..color = AmarTheme.secondaryFixed.withOpacity(0.2 * (1 - animationValue))
-      ..style = PaintingStyle.fill;
-      
-    final paint2 = Paint()
-      ..color = AmarTheme.secondaryFixed.withOpacity(0.1 * (1 - animationValue))
-      ..style = PaintingStyle.fill;
-
-    final maxRadius = size.width * 1.5;
-    
-    // Inner pulse
-    canvas.drawCircle(center, (size.width / 2) + (animationValue * maxRadius * 0.5), paint1);
-    
-    // Outer pulse
-    canvas.drawCircle(center, (size.width / 2) + (animationValue * maxRadius), paint2);
-  }
-
-  @override
-  bool shouldRepaint(covariant _PulsePainter oldDelegate) {
-    return oldDelegate.animationValue != animationValue || 
-           oldDelegate.isListening != isListening;
   }
 }

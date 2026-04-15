@@ -2,21 +2,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
-final voiceServiceProvider = NotifierProvider<VoiceServiceNotifier, VoiceState>(() {
-  return VoiceServiceNotifier();
-});
+final voiceServiceProvider =
+    NotifierProvider<VoiceServiceNotifier, VoiceState>(VoiceServiceNotifier.new);
 
+// ─── State ────────────────────────────────────────────────────────────────────
 class VoiceState {
   final bool isListening;
   final String currentText;
   final bool hasError;
   final String errorMessage;
+  final bool isContinuousMode;
 
-  VoiceState({
+  const VoiceState({
     this.isListening = false,
     this.currentText = '',
     this.hasError = false,
     this.errorMessage = '',
+    this.isContinuousMode = false,
   });
 
   VoiceState copyWith({
@@ -24,67 +26,160 @@ class VoiceState {
     String? currentText,
     bool? hasError,
     String? errorMessage,
-  }) {
-    return VoiceState(
-      isListening: isListening ?? this.isListening,
-      currentText: currentText ?? this.currentText,
-      hasError: hasError ?? this.hasError,
-      errorMessage: errorMessage ?? this.errorMessage,
-    );
-  }
+    bool? isContinuousMode,
+  }) =>
+      VoiceState(
+        isListening: isListening ?? this.isListening,
+        currentText: currentText ?? this.currentText,
+        hasError: hasError ?? this.hasError,
+        errorMessage: errorMessage ?? this.errorMessage,
+        isContinuousMode: isContinuousMode ?? this.isContinuousMode,
+      );
 }
 
+// ─── Notifier ─────────────────────────────────────────────────────────────────
 class VoiceServiceNotifier extends Notifier<VoiceState> {
-  final SpeechToText _speechToText = SpeechToText();
-  bool _speechEnabled = false;
+  SpeechToText _stt = SpeechToText();
+  Future<bool>? _initFuture; // guard: only one init runs at a time
+  bool _available = false;
 
   @override
   VoiceState build() {
-    _initSpeech();
-    return VoiceState();
+    _ensureInit(); // warm up eagerly
+    return const VoiceState();
   }
 
-  Future<void> _initSpeech() async {
+  Future<bool> _ensureInit() {
+    _initFuture ??= _runInit();
+    return _initFuture!;
+  }
+
+  Future<bool> _runInit() async {
+    _available = false;
     try {
-      _speechEnabled = await _speechToText.initialize(
-        onError: (error) => state = state.copyWith(hasError: true, errorMessage: error.errorMsg),
-        onStatus: (status) {
-          if (status == 'done' || status == 'notListening') {
-            state = state.copyWith(isListening: false);
-          }
-        },
+      _stt = SpeechToText();
+      _available = await _stt.initialize(
+        onError: _onError,
+        onStatus: _onStatus,
+        debugLogging: false,
       );
-    } catch (e) {
-      state = state.copyWith(hasError: true, errorMessage: "Failed to initialize speech to text");
+      if (_available) {
+        // Let Android's SpeechRecognizer fully connect before first listen()
+        await Future.delayed(const Duration(milliseconds: 200));
+      }
+    } catch (_) {
+      _available = false;
+    }
+    return _available;
+  }
+
+  void _onStatus(String status) {
+    if (status == 'done' || status == 'notListening') {
+      if (state.isListening) {
+        state = state.copyWith(isListening: false);
+      }
     }
   }
 
-  Future<void> startListening() async {
-    if (!_speechEnabled) {
-      await _initSpeech();
+  void _onError(dynamic error) {
+    final code = (error.errorMsg as String?) ?? '';
+
+    // User paused / said nothing — non-fatal
+    if (code == 'error_no_match' || code == 'error_speech_timeout') {
+      state = state.copyWith(isListening: false, currentText: '');
+      return;
     }
-    
-    if (_speechEnabled) {
-      state = state.copyWith(isListening: true, currentText: '', hasError: false, errorMessage: '');
-      await _speechToText.listen(
-        onResult: _onSpeechResult,
-        listenFor: const Duration(seconds: 30),
-        pauseFor: const Duration(seconds: 3),
+
+    // Android recognizer in bad state — reset silently, user can tap again
+    if (code == 'error_client' || code == 'error_recognizer_busy') {
+      state = state.copyWith(isListening: false, isContinuousMode: false, currentText: '');
+      _available = false;
+      _initFuture = null;
+      return;
+    }
+
+    state = state.copyWith(
+      isListening: false,
+      isContinuousMode: false,
+      currentText: '',
+      hasError: true,
+      errorMessage: _friendly(code),
+    );
+  }
+
+  String _friendly(String code) {
+    switch (code) {
+      case 'error_permission':
+        return 'Microphone permission denied.\nGo to Settings → Apps → Amar Wallet → Permissions → Microphone.';
+      case 'error_audio':
+        return 'Cannot access microphone. Close other apps using it.';
+      case 'error_network':
+        return 'No internet. Speech recognition needs a connection.';
+      case 'error_server':
+        return 'Google speech server error. Try again.';
+      default:
+        return 'Voice error ($code). Tap mic to try again.';
+    }
+  }
+
+  // ── Public API ──────────────────────────────────────────────────────────────
+
+  /// Start listening with optional locale (e.g. 'en_US', 'bn_BD')
+  Future<void> startListening({
+    bool continuous = false,
+    String localeId = 'en_US',
+  }) async {
+    state = VoiceState(isContinuousMode: continuous);
+
+    final ok = await _ensureInit();
+    if (!ok) {
+      state = state.copyWith(
+        hasError: true,
+        errorMessage:
+            'Speech recognition unavailable.\nEnsure Google app is installed and updated.',
+      );
+      return;
+    }
+
+    if (_stt.isListening) {
+      await _stt.cancel();
+      await Future.delayed(const Duration(milliseconds: 300));
+    }
+
+    state = state.copyWith(isListening: true, currentText: '');
+
+    await _stt.listen(
+      onResult: _onResult,
+      listenFor: const Duration(seconds: 60),
+      pauseFor: const Duration(seconds: 3),
+      localeId: localeId,
+      listenOptions: SpeechListenOptions(
+        listenMode: ListenMode.dictation,
         partialResults: true,
         cancelOnError: true,
-        listenOptions: SpeechListenOptions(listenMode: ListenMode.dictation),
-      );
-    } else {
-      state = state.copyWith(hasError: true, errorMessage: "Speech recognition is not available.");
-    }
+        enableHapticFeedback: false,
+      ),
+    );
   }
 
   Future<void> stopListening() async {
-    await _speechToText.stop();
-    state = state.copyWith(isListening: false);
+    if (_stt.isListening) await _stt.stop();
+    state = state.copyWith(isListening: false, isContinuousMode: false, currentText: '');
   }
 
-  void _onSpeechResult(SpeechRecognitionResult result) {
-    state = state.copyWith(currentText: result.recognizedWords);
+  void clearText() => state = state.copyWith(currentText: '');
+
+  void _onResult(SpeechRecognitionResult result) {
+    state = state.copyWith(
+      currentText: result.recognizedWords,
+      isListening: !result.finalResult,
+    );
+  }
+
+  /// Get available locales from the STT engine
+  Future<List<LocaleName>> getAvailableLocales() async {
+    await _ensureInit();
+    if (!_available) return [];
+    return _stt.locales();
   }
 }
