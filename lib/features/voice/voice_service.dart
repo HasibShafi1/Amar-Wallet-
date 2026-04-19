@@ -151,7 +151,7 @@ class VoiceServiceNotifier extends Notifier<VoiceState> {
     await _stt.listen(
       onResult: _onResult,
       listenFor: const Duration(seconds: 60),
-      pauseFor: const Duration(seconds: 3),
+      pauseFor: const Duration(seconds: 7),
       localeId: localeId,
       listenOptions: SpeechListenOptions(
         listenMode: ListenMode.dictation,

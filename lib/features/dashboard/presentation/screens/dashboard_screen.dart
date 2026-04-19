@@ -73,8 +73,8 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   Widget build(BuildContext context) {
     final expenseState = ref.watch(expenseListProvider);
     final totalIncomeAsync = ref.watch(totalIncomeProvider);
-    final lentAsync = ref.watch(pendingLentProvider);
-    final borrowedAsync = ref.watch(pendingBorrowedProvider);
+    final totalLent = ref.watch(pendingLentProvider);
+    final totalBorrowed = ref.watch(pendingBorrowedProvider);
     final goalsAsync = ref.watch(goalListProvider);
     final budgetsAsync = ref.watch(budgetMapProvider);
 
@@ -220,13 +220,17 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                               fontWeight: FontWeight.bold,
                               letterSpacing: 1.5)),
                       const SizedBox(height: 8),
-                      Text(
-                        NumberFormat.currency(symbol: sym, decimalDigits: 0)
-                            .format(balance),
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 36,
-                            fontWeight: FontWeight.bold),
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          NumberFormat.currency(symbol: sym, decimalDigits: 0)
+                              .format(balance),
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 36,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                       const SizedBox(height: 24),
                       Row(
@@ -372,7 +376,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                         label: 'Lent',
                         icon: Icons.arrow_upward_rounded,
                         color: Colors.green,
-                        value: lentAsync.asData?.value ?? 0,
+                        value: totalLent,
                         sym: sym,
                         onTap: () => Navigator.push(
                             context, MaterialPageRoute(builder: (_) => const LedgerScreen())),
@@ -385,7 +389,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                         label: 'Borrowed',
                         icon: Icons.arrow_downward_rounded,
                         color: cs.error,
-                        value: borrowedAsync.asData?.value ?? 0,
+                        value: totalBorrowed,
                         sym: sym,
                         onTap: () => Navigator.push(
                             context, MaterialPageRoute(builder: (_) => const LedgerScreen())),
@@ -657,10 +661,20 @@ class _MiniStat extends StatelessWidget {
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         Icon(icon, color: iconColor, size: 14),
         const SizedBox(width: 6),
-        Text(label, style: const TextStyle(color: Colors.white70, fontSize: 12)),
+        Flexible(
+          child: Text(label, 
+            style: const TextStyle(color: Colors.white70, fontSize: 12),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
       ]),
       const SizedBox(height: 4),
-      Text('$sym${value.toStringAsFixed(0)}', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
+      FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Text('$sym${value.toStringAsFixed(0)}', 
+          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
+      ),
     ]);
   }
 }

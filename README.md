@@ -1,29 +1,34 @@
 # Amar Wallet
 
-Amar Wallet is an intelligent, voice-powered personal finance application built with Flutter. It streamlines the process of tracking expenses by allowing users to simply speak their transactions, while leveraging the power of Google Generative AI (Gemini) to automatically categorize and structure the data.
+Amar Wallet is an intelligent, voice-powered personal finance ecosystem built with Flutter. It streamlines the process of tracking expenses by allowing users to simply speak their transactions, while leveraging the power of Google Generative AI (Gemini) to automatically categorize and structure the data.
 
-## Features
+## 🌟 Key Features
 
-- 🎙️ **Voice-Activated Logging**: Simply tap the microphone and speak (e.g., "I spent $15 on lunch at Subway") to log expenses quickly.
-- 🧠 **AI-Powered Parsing**: Google Gemini automatically interprets your speech, extracting the amount, description, and category.
-- 💡 **Smart Insights**: Get AI-generated financial insights and recommendations based on your recent spending habits.
-- 🔒 **Local Storage & Security**: Your financial data is securely stored locally on your device using `sqflite` and `flutter_secure_storage`.
-- ⚡ **Reactive State Management**: Built with Riverpod for robust and efficient state management.
-- ✨ **Modern Material 3 UI**: Clean, beautiful, and intuitive user interface optimized for a pleasant user experience.
+- 🎙️ **Voice-Activated Logging**: Speak naturally (e.g., "I spent $15 on lunch and gave John $20") to log complex, multi-intent transactions.
+- 🧠 **AI-Powered Parsing**: Deep integration with Google Gemini to automatically interpret speech, extracting intents, amounts, descriptions, and categories in both English and Bangla.
+- 💡 **Smart Insights & Analytics**: Real-time AI-generated financial insights, deep analytics with interactive charts, and category breakdowns.
+- 🤝 **Ledger & Debt Tracking**: Keep track of money lent to or borrowed from friends automatically as part of your voice tracking.
+- 🎯 **Goals & Budgets**: Set dynamic spending budgets per category, and visual savings goals.
+- 📅 **Subscriptions**: Track recurring payments and visualize your monthly fixed costs.
+- 🏷️ **Tagging System**: Organize expenses granularly using customizable tags.
+- 🔔 **Smart Reminders**: Local notifications for subscription due dates, budget overages, and daily summaries.
+- 🔒 **Local Storage & Privacy**: All transactional data is stored 100% locally on your device via SQLite. API keys are encrypted via Secure Storage.
 
-## Technology Stack
+## 🛠️ Technology Stack
 
-- **Framework**: Flutter
+- **Framework**: Flutter (Dart)
+- **Architecture**: Feature-Based Clean Architecture
 - **State Management**: Riverpod (`flutter_riverpod`)
 - **AI Integration**: Google Generative AI (`google_generative_ai`)
 - **Speech Recognition**: Speech to Text (`speech_to_text`)
 - **Local Database**: SQLite (`sqflite`)
-- **Secure Storage**: Flutter Secure Storage (`flutter_secure_storage`)
+- **Background Tasks**: Flutter Local Notifications (`flutter_local_notifications`)
+- **Charts**: FL Chart (`fl_chart`)
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
-- Flutter SDK (version 3.11.4 or higher)
+- Flutter SDK (version 3.16.0 or higher)
 - A Google Gemini API Key
 
 ### Installation
@@ -40,22 +45,17 @@ Amar Wallet is an intelligent, voice-powered personal finance application built 
    ```
 
 3. **Set up your API Key:**
-   When you first run the app, you will be prompted to enter your Gemini API Key in the settings dialog. It will be securely stored on your device.
+   Launch the app and navigate to **Settings > AI Settings**. Enter your Gemini API Key. It will be encrypted and saved locally.
 
 4. **Run the application:**
    ```bash
    flutter run
    ```
 
-## Folder Structure
+## 📂 Architecture Overview
 
-- `lib/core/`: Contains core constants, themes, and database setup.
-- `lib/features/`: Contains feature-specific logic, organized by domain:
-  - `ai/`: Services and logic for Google Generative AI integration.
-  - `dashboard/`: The main UI screen for viewing totals and transactions.
-  - `expenses/`: Data models, providers, and widgets for expense management.
-  - `voice/`: Logic and widgets for speech-to-text functionality.
+For a detailed technical look at how the app makes decisions, manages the voice-to-structured-data pipeline, and maintains performance, see the [SYSTEM_OVERVIEW.md](SYSTEM_OVERVIEW.md) file.
 
-## License
+## 📄 License
 
 This project is licensed under the MIT License.

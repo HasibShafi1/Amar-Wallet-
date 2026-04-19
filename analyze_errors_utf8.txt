@@ -1,0 +1,191 @@
+﻿Analyzing Amar Wallet...                                        
+
+   info - The import of 'dart:ui' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' - lib\features\analytics\presentation\screens\analytics_screen.dart:1:8 - unnecessary_import
+  error - The property 'monthlyLimit' can't be unconditionally accessed because the receiver can be 'null' - lib\features\analytics\presentation\screens\analytics_screen.dart:50:50 - unchecked_use_of_nullable_value
+  error - The property 'title' can't be unconditionally accessed because the receiver can be 'null' - lib\features\analytics\presentation\screens\analytics_screen.dart:53:27 - unchecked_use_of_nullable_value
+  error - The property 'progress' can't be unconditionally accessed because the receiver can be 'null' - lib\features\analytics\presentation\screens\analytics_screen.dart:53:52 - unchecked_use_of_nullable_value
+  error - The property 'amount' can't be unconditionally accessed because the receiver can be 'null' - lib\features\analytics\presentation\screens\analytics_screen.dart:82:58 - unchecked_use_of_nullable_value
+  error - The property 'amount' can't be unconditionally accessed because the receiver can be 'null' - lib\features\analytics\presentation\screens\analytics_screen.dart:198:55 - unchecked_use_of_nullable_value
+  error - Undefined name 'ConflictAlgorithm' - lib\features\budget\data\repositories\budget_repository.dart:25:26 - undefined_identifier
+  error - Target of URI doesn't exist: '../models/budget_model.dart' - lib\features\budget\presentation\providers\budget_provider.dart:2:8 - uri_does_not_exist
+  error - Target of URI doesn't exist: '../repositories/budget_repository.dart' - lib\features\budget\presentation\providers\budget_provider.dart:3:8 - uri_does_not_exist
+  error - The function 'BudgetRepository' isn't defined - lib\features\budget\presentation\providers\budget_provider.dart:5:50 - undefined_function
+  error - The name 'BudgetModel' isn't a type, so it can't be used as a type argument - lib\features\budget\presentation\providers\budget_provider.dart:8:52 - non_type_as_type_argument
+  error - The name 'BudgetModel' isn't a type, so it can't be used as a type argument - lib\features\budget\presentation\providers\budget_provider.dart:12:54 - non_type_as_type_argument
+  error - The name 'BudgetModel' isn't a type, so it can't be used as a type argument - lib\features\budget\presentation\providers\budget_provider.dart:17:53 - non_type_as_type_argument
+  error - The name 'BudgetModel' isn't a type, so it can't be used as a type argument - lib\features\budget\presentation\providers\budget_provider.dart:19:15 - non_type_as_type_argument
+  error - The method 'BudgetModel' isn't defined for the type 'BudgetListNotifier' - lib\features\budget\presentation\providers\budget_provider.dart:25:11 - undefined_method
+   info - The import of 'dart:ui' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' - lib\features\dashboard\presentation\screens\ai_insights_screen.dart:1:8 - unnecessary_import
+warning - Unused import: '../../../ledger/presentation/providers/ledger_provider.dart' - lib\features\dashboard\presentation\screens\ai_insights_screen.dart:7:8 - unused_import
+  error - The property 'monthlyLimit' can't be unconditionally accessed because the receiver can be 'null' - lib\features\dashboard\presentation\screens\ai_insights_screen.dart:42:61 - unchecked_use_of_nullable_value
+  error - The property 'title' can't be unconditionally accessed because the receiver can be 'null' - lib\features\dashboard\presentation\screens\ai_insights_screen.dart:43:54 - unchecked_use_of_nullable_value
+  error - The property 'progress' can't be unconditionally accessed because the receiver can be 'null' - lib\features\dashboard\presentation\screens\ai_insights_screen.dart:43:75 - unchecked_use_of_nullable_value
+warning - The value of the local variable 'totalSpent' isn't used - lib\features\dashboard\presentation\screens\ai_insights_screen.dart:65:11 - unused_local_variable
+   info - The private field _touchedPieIndex could be 'final' - lib\features\dashboard\presentation\screens\dashboard_screen.dart:29:7 - prefer_final_fields
+warning - The value of the field '_touchedPieIndex' isn't used - lib\features\dashboard\presentation\screens\dashboard_screen.dart:29:7 - unused_field
+   info - Unnecessary use of multiple underscores - lib\features\dashboard\presentation\screens\dashboard_screen.dart:291:30 - unnecessary_underscores
+   info - Unnecessary use of multiple underscores - lib\features\dashboard\presentation\screens\dashboard_screen.dart:459:30 - unnecessary_underscores
+   info - Unnecessary use of multiple underscores - lib\features\dashboard\presentation\screens\dashboard_screen.dart:499:46 - unnecessary_underscores
+warning - The receiver can't be 'null' because of short-circuiting, so the null-aware operator '?.' can't be used - lib\features\dashboard\presentation\screens\dashboard_screen.dart:506:50 - invalid_null_aware_operator
+warning - The '!' will have no effect because the receiver can't be null - lib\features\dashboard\presentation\screens\dashboard_screen.dart:514:55 - unnecessary_non_null_assertion
+  error - Undefined class 'GoalModel' - lib\features\dashboard\presentation\screens\dashboard_screen.dart:711:9 - undefined_class
+warning - The declaration '_StatCard' isn't referenced - lib\features\dashboard\presentation\screens\dashboard_screen.dart:759:7 - unused_element
+warning - Unused import: '../../../ledger/data/models/ledger_model.dart' - lib\features\dashboard\presentation\screens\main_layout.dart:14:8 - unused_import
+  error - Undefined name 'ConflictAlgorithm' - lib\features\expenses\data\repositories\expense_repository.dart:76:28 - undefined_identifier
+  error - Directives must appear before any declarations - lib\features\expenses\data\repositories\expense_repository.dart:123:1 - directive_after_declaration
+   info - Unnecessary use of multiple underscores - lib\features\expenses\presentation\screens\expense_history_screen.dart:185:30 - unnecessary_underscores
+  error - Expected to find ']' - lib\features\expenses\presentation\screens\expense_history_screen.dart:376:45 - expected_token
+  error - Expected to find ')' - lib\features\expenses\presentation\screens\expense_history_screen.dart:377:43 - expected_token
+  error - Too many positional arguments: 0 expected, but 2 found - lib\features\expenses\presentation\screens\expense_history_screen.dart:380:39 - extra_positional_arguments_could_be_named
+  error - Expected to find ')' - lib\features\expenses\presentation\screens\expense_history_screen.dart:395:37 - expected_token
+  error - Expected to find ';' - lib\features\expenses\presentation\screens\expense_history_screen.dart:396:35 - expected_token
+  error - Expected an identifier - lib\features\expenses\presentation\screens\expense_history_screen.dart:396:36 - missing_identifier
+  error - Unexpected text ';' - lib\features\expenses\presentation\screens\expense_history_screen.dart:396:36 - unexpected_token
+  error - Expected to find '}' - lib\features\expenses\presentation\screens\expense_history_screen.dart:397:33 - expected_token
+  error - Expected to find ';' - lib\features\expenses\presentation\screens\expense_history_screen.dart:399:29 - expected_token
+  error - Expected an identifier - lib\features\expenses\presentation\screens\expense_history_screen.dart:399:30 - missing_identifier
+  error - Unexpected text ';' - lib\features\expenses\presentation\screens\expense_history_screen.dart:399:30 - unexpected_token
+  error - Expected to find '}' - lib\features\expenses\presentation\screens\expense_history_screen.dart:400:27 - expected_token
+  error - Expected to find ')' - lib\features\expenses\presentation\screens\expense_history_screen.dart:402:24 - expected_token
+  error - Expected to find ';' - lib\features\expenses\presentation\screens\expense_history_screen.dart:405:19 - expected_token
+warning - Dead code - lib\features\expenses\presentation\screens\expense_history_screen.dart:405:20 - dead_code
+  error - Expected an identifier - lib\features\expenses\presentation\screens\expense_history_screen.dart:405:20 - missing_identifier
+  error - Expected to find ';' - lib\features\expenses\presentation\screens\expense_history_screen.dart:405:20 - expected_token
+  error - Unexpected text ';' - lib\features\expenses\presentation\screens\expense_history_screen.dart:405:20 - unexpected_token
+  error - Expected an identifier - lib\features\expenses\presentation\screens\expense_history_screen.dart:406:17 - missing_identifier
+  error - Expected to find ';' - lib\features\expenses\presentation\screens\expense_history_screen.dart:406:17 - expected_token
+  error - Unexpected text ';' - lib\features\expenses\presentation\screens\expense_history_screen.dart:406:17 - unexpected_token
+  error - Expected an identifier - lib\features\expenses\presentation\screens\expense_history_screen.dart:406:18 - missing_identifier
+  error - Expected to find ';' - lib\features\expenses\presentation\screens\expense_history_screen.dart:406:18 - expected_token
+  error - Unexpected text ';' - lib\features\expenses\presentation\screens\expense_history_screen.dart:406:18 - unexpected_token
+  error - Expected an identifier - lib\features\expenses\presentation\screens\expense_history_screen.dart:407:15 - missing_identifier
+  error - Unexpected text ';' - lib\features\expenses\presentation\screens\expense_history_screen.dart:407:15 - unexpected_token
+   info - Unnecessary empty statement - lib\features\expenses\presentation\screens\expense_history_screen.dart:407:16 - empty_statements
+  error - Expected a class member - lib\features\expenses\presentation\screens\expense_history_screen.dart:408:14 - expected_class_member
+  error - Expected a class member - lib\features\expenses\presentation\screens\expense_history_screen.dart:409:11 - expected_class_member
+  error - Expected a class member - lib\features\expenses\presentation\screens\expense_history_screen.dart:409:12 - expected_class_member
+  error - Expected a class member - lib\features\expenses\presentation\screens\expense_history_screen.dart:410:9 - expected_class_member
+  error - Expected a class member - lib\features\expenses\presentation\screens\expense_history_screen.dart:410:10 - expected_class_member
+  error - Expected a class member - lib\features\expenses\presentation\screens\expense_history_screen.dart:411:7 - expected_class_member
+  error - Expected a class member - lib\features\expenses\presentation\screens\expense_history_screen.dart:411:8 - expected_class_member
+  error - Expected a class member - lib\features\expenses\presentation\screens\expense_history_screen.dart:412:5 - expected_class_member
+  error - Expected a class member - lib\features\expenses\presentation\screens\expense_history_screen.dart:412:6 - expected_class_member
+  error - Expected a method, getter, setter or operator declaration - lib\features\expenses\presentation\screens\expense_history_screen.dart:414:1 - expected_executable
+  error - Undefined name 'CategoryEngine' - lib\features\expenses\presentation\widgets\confirmation_dialog.dart:162:29 - undefined_identifier
+   info - Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check - lib\features\expenses\presentation\widgets\confirmation_dialog.dart:165:48 - use_build_context_synchronously
+warning - The receiver can't be 'null' because of short-circuiting, so the null-aware operator '?.' can't be used - lib\features\expenses\presentation\widgets\tag_chip_input.dart:61:35 - invalid_null_aware_operator
+  error - Target of URI doesn't exist: '../models/goal_model.dart' - lib\features\goals\presentation\providers\goal_provider.dart:2:8 - uri_does_not_exist
+  error - Target of URI doesn't exist: '../repositories/goal_repository.dart' - lib\features\goals\presentation\providers\goal_provider.dart:3:8 - uri_does_not_exist
+  error - The function 'GoalRepository' isn't defined - lib\features\goals\presentation\providers\goal_provider.dart:5:48 - undefined_function
+  error - The name 'GoalModel' isn't a type, so it can't be used as a type argument - lib\features\goals\presentation\providers\goal_provider.dart:8:50 - non_type_as_type_argument
+  error - The name 'GoalModel' isn't a type, so it can't be used as a type argument - lib\features\goals\presentation\providers\goal_provider.dart:11:51 - non_type_as_type_argument
+  error - The name 'GoalModel' isn't a type, so it can't be used as a type argument - lib\features\goals\presentation\providers\goal_provider.dart:13:15 - non_type_as_type_argument
+  error - Undefined class 'GoalModel' - lib\features\goals\presentation\providers\goal_provider.dart:17:20 - undefined_class
+   info - The member 'update' overrides an inherited member but isn't annotated with '@override' - lib\features\goals\presentation\providers\goal_provider.dart:22:16 - annotate_overrides
+  error - 'GoalListNotifier.update' ('Future<void> Function(InvalidType)') isn't a valid override of '$AsyncClassModifier.update' ('Future<List<InvalidType>> Function(FutureOr<List<InvalidType>> Function(List<InvalidType>), {FutureOr<List<InvalidType>> Function(Object, StackTrace)? onError})') - lib\features\goals\presentation\providers\goal_provider.dart:22:16 - invalid_override
+  error - Undefined class 'GoalModel' - lib\features\goals\presentation\providers\goal_provider.dart:22:23 - undefined_class
+   info - The parameter name 'goal' doesn't match the name 'cb' in the overridden method - lib\features\goals\presentation\providers\goal_provider.dart:22:33 - avoid_renaming_method_parameters
+  error - Target of URI doesn't exist: '../models/goal_model.dart' - lib\features\goals\presentation\screens\goals_screen.dart:3:8 - uri_does_not_exist
+  error - Undefined class 'GoalModel' - lib\features\goals\presentation\screens\goals_screen.dart:84:9 - undefined_class
+  error - Undefined class 'GoalModel' - lib\features\goals\presentation\screens\goals_screen.dart:250:23 - undefined_class
+  error - The method 'GoalModel' isn't defined for the type '_AddGoalSheetState' - lib\features\goals\presentation\screens\goals_screen.dart:276:19 - undefined_method
+  error - Target of URI doesn't exist: '../models/income_model.dart' - lib\features\income\presentation\providers\income_provider.dart:2:8 - uri_does_not_exist
+  error - Target of URI doesn't exist: '../repositories/income_repository.dart' - lib\features\income\presentation\providers\income_provider.dart:3:8 - uri_does_not_exist
+  error - The function 'IncomeRepository' isn't defined - lib\features\income\presentation\providers\income_provider.dart:5:50 - undefined_function
+  error - The name 'IncomeModel' isn't a type, so it can't be used as a type argument - lib\features\income\presentation\providers\income_provider.dart:8:52 - non_type_as_type_argument
+  error - The operator '+' isn't defined for the type 'FutureOr<double>' - lib\features\income\presentation\providers\income_provider.dart:13:44 - undefined_operator
+  error - The property 'amount' can't be unconditionally accessed because the receiver can be 'null' - lib\features\income\presentation\providers\income_provider.dart:13:48 - unchecked_use_of_nullable_value
+  error - The name 'IncomeModel' isn't a type, so it can't be used as a type argument - lib\features\income\presentation\providers\income_provider.dart:16:53 - non_type_as_type_argument
+  error - The name 'IncomeModel' isn't a type, so it can't be used as a type argument - lib\features\income\presentation\providers\income_provider.dart:18:15 - non_type_as_type_argument
+  error - Undefined class 'IncomeModel' - lib\features\income\presentation\providers\income_provider.dart:22:20 - undefined_class
+  error - Target of URI doesn't exist: '../models/income_model.dart' - lib\features\income\presentation\widgets\add_income_bottom_sheet.dart:3:8 - uri_does_not_exist
+  error - The method 'IncomeModel' isn't defined for the type '_AddIncomeBottomSheetState' - lib\features\income\presentation\widgets\add_income_bottom_sheet.dart:35:20 - undefined_method
+  error - Target of URI doesn't exist: '../models/ledger_model.dart' - lib\features\ledger\presentation\providers\ledger_provider.dart:2:8 - uri_does_not_exist
+  error - Target of URI doesn't exist: '../repositories/ledger_repository.dart' - lib\features\ledger\presentation\providers\ledger_provider.dart:3:8 - uri_does_not_exist
+  error - The function 'LedgerRepository' isn't defined - lib\features\ledger\presentation\providers\ledger_provider.dart:5:50 - undefined_function
+  error - The name 'LedgerModel' isn't a type, so it can't be used as a type argument - lib\features\ledger\presentation\providers\ledger_provider.dart:8:52 - non_type_as_type_argument
+  error - The name 'LedgerModel' isn't a type, so it can't be used as a type argument - lib\features\ledger\presentation\providers\ledger_provider.dart:19:53 - non_type_as_type_argument
+  error - The name 'LedgerModel' isn't a type, so it can't be used as a type argument - lib\features\ledger\presentation\providers\ledger_provider.dart:21:15 - non_type_as_type_argument
+  error - Undefined class 'LedgerModel' - lib\features\ledger\presentation\providers\ledger_provider.dart:25:20 - undefined_class
+  error - Target of URI doesn't exist: '../models/ledger_model.dart' - lib\features\ledger\presentation\screens\ledger_screen.dart:4:8 - uri_does_not_exist
+  error - The property 'type' can't be unconditionally accessed because the receiver can be 'null' - lib\features\ledger\presentation\screens\ledger_screen.dart:59:47 - unchecked_use_of_nullable_value
+  error - The property 'type' can't be unconditionally accessed because the receiver can be 'null' - lib\features\ledger\presentation\screens\ledger_screen.dart:60:51 - unchecked_use_of_nullable_value
+  error - The name 'LedgerModel' isn't a type, so it can't be used as a type argument - lib\features\ledger\presentation\screens\ledger_screen.dart:93:14 - non_type_as_type_argument
+  error - The property 'isPaid' can't be unconditionally accessed because the receiver can be 'null' - lib\features\ledger\presentation\screens\ledger_screen.dart:102:45 - unchecked_use_of_nullable_value
+  error - The property 'isPaid' can't be unconditionally accessed because the receiver can be 'null' - lib\features\ledger\presentation\screens\ledger_screen.dart:103:41 - unchecked_use_of_nullable_value
+  error - The property 'amount' can't be unconditionally accessed because the receiver can be 'null' - lib\features\ledger\presentation\screens\ledger_screen.dart:104:53 - unchecked_use_of_nullable_value
+  error - Undefined class 'LedgerModel' - lib\features\ledger\presentation\screens\ledger_screen.dart:171:9 - undefined_class
+  error - Undefined class 'LedgerModel' - lib\features\ledger\presentation\screens\ledger_screen.dart:253:23 - undefined_class
+  error - The method 'LedgerModel' isn't defined for the type '_AddLedgerSheetState' - lib\features\ledger\presentation\screens\ledger_screen.dart:278:18 - undefined_method
+  error - Target of URI doesn't exist: '../../budget/data/models/budget_model.dart' - lib\features\profile\presentation\screens\settings_screen.dart:5:8 - uri_does_not_exist
+  error - Target of URI doesn't exist: '../../budget/presentation/providers/budget_provider.dart' - lib\features\profile\presentation\screens\settings_screen.dart:6:8 - uri_does_not_exist
+  error - Undefined class 'BudgetModel' - lib\features\profile\presentation\screens\settings_screen.dart:73:71 - undefined_class
+  error - Undefined name 'budgetListProvider' - lib\features\profile\presentation\screens\settings_screen.dart:104:26 - undefined_identifier
+  error - Undefined name 'budgetListProvider' - lib\features\profile\presentation\screens\settings_screen.dart:114:26 - undefined_identifier
+  error - Undefined name 'budgetListProvider' - lib\features\profile\presentation\screens\settings_screen.dart:421:27 - undefined_identifier
+   info - Unnecessary use of multiple underscores - lib\features\profile\presentation\screens\settings_screen.dart:450:30 - unnecessary_underscores
+  error - Target of URI doesn't exist: '../../../core/database/database_helper.dart' - lib\features\subscriptions\data\repositories\subscription_repository.dart:1:8 - uri_does_not_exist
+  error - Target of URI doesn't exist: 'models/subscription_model.dart' - lib\features\subscriptions\data\repositories\subscription_repository.dart:2:8 - uri_does_not_exist
+  error - The name 'SubscriptionModel' isn't a type, so it can't be used as a type argument - lib\features\subscriptions\data\repositories\subscription_repository.dart:5:15 - non_type_as_type_argument
+  error - Undefined name 'DatabaseHelper' - lib\features\subscriptions\data\repositories\subscription_repository.dart:6:22 - undefined_identifier
+  error - Undefined name 'SubscriptionModel' - lib\features\subscriptions\data\repositories\subscription_repository.dart:8:21 - undefined_identifier
+  error - The name 'SubscriptionModel' isn't a type, so it can't be used as a type argument - lib\features\subscriptions\data\repositories\subscription_repository.dart:11:15 - non_type_as_type_argument
+  error - Undefined name 'DatabaseHelper' - lib\features\subscriptions\data\repositories\subscription_repository.dart:12:22 - undefined_identifier
+  error - Undefined name 'SubscriptionModel' - lib\features\subscriptions\data\repositories\subscription_repository.dart:15:21 - undefined_identifier
+  error - The name 'SubscriptionModel' isn't a type, so it can't be used as a type argument - lib\features\subscriptions\data\repositories\subscription_repository.dart:18:15 - non_type_as_type_argument
+  error - Undefined name 'DatabaseHelper' - lib\features\subscriptions\data\repositories\subscription_repository.dart:19:22 - undefined_identifier
+  error - Undefined name 'SubscriptionModel' - lib\features\subscriptions\data\repositories\subscription_repository.dart:26:21 - undefined_identifier
+  error - Undefined class 'SubscriptionModel' - lib\features\subscriptions\data\repositories\subscription_repository.dart:29:23 - undefined_class
+  error - Undefined name 'DatabaseHelper' - lib\features\subscriptions\data\repositories\subscription_repository.dart:30:22 - undefined_identifier
+  error - Undefined class 'SubscriptionModel' - lib\features\subscriptions\data\repositories\subscription_repository.dart:34:23 - undefined_class
+  error - Undefined name 'DatabaseHelper' - lib\features\subscriptions\data\repositories\subscription_repository.dart:35:22 - undefined_identifier
+  error - Undefined name 'DatabaseHelper' - lib\features\subscriptions\data\repositories\subscription_repository.dart:41:22 - undefined_identifier
+  error - Undefined name 'DatabaseHelper' - lib\features\subscriptions\data\repositories\subscription_repository.dart:47:22 - undefined_identifier
+  error - Target of URI doesn't exist: '../data/models/subscription_model.dart' - lib\features\subscriptions\presentation\providers\subscription_provider.dart:2:8 - uri_does_not_exist
+  error - Target of URI doesn't exist: '../data/repositories/subscription_repository.dart' - lib\features\subscriptions\presentation\providers\subscription_provider.dart:3:8 - uri_does_not_exist
+  error - The function 'SubscriptionRepository' isn't defined - lib\features\subscriptions\presentation\providers\subscription_provider.dart:6:21 - undefined_function
+  error - The name 'SubscriptionModel' isn't a type, so it can't be used as a type argument - lib\features\subscriptions\presentation\providers\subscription_provider.dart:9:36 - non_type_as_type_argument
+  error - The property 'isActive' can't be unconditionally accessed because the receiver can be 'null' - lib\features\subscriptions\presentation\providers\subscription_provider.dart:15:23 - unchecked_use_of_nullable_value
+  error - The operator '+' isn't defined for the type 'FutureOr<double>' - lib\features\subscriptions\presentation\providers\subscription_provider.dart:16:34 - undefined_operator
+  error - The property 'monthlyCost' can't be unconditionally accessed because the receiver can be 'null' - lib\features\subscriptions\presentation\providers\subscription_provider.dart:16:38 - unchecked_use_of_nullable_value
+  error - The name 'SubscriptionModel' isn't a type, so it can't be used as a type argument - lib\features\subscriptions\presentation\providers\subscription_provider.dart:19:45 - non_type_as_type_argument
+  error - The property 'isActive' can't be unconditionally accessed because the receiver can be 'null' - lib\features\subscriptions\presentation\providers\subscription_provider.dart:21:30 - unchecked_use_of_nullable_value
+  error - The property 'isDueSoon' can't be unconditionally accessed because the receiver can be 'null' - lib\features\subscriptions\presentation\providers\subscription_provider.dart:21:44 - unchecked_use_of_nullable_value
+  error - The name 'SubscriptionModel' isn't a type, so it can't be used as a type argument - lib\features\subscriptions\presentation\providers\subscription_provider.dart:25:32 - non_type_as_type_argument
+  error - The name 'SubscriptionModel' isn't a type, so it can't be used as a type argument - lib\features\subscriptions\presentation\providers\subscription_provider.dart:27:15 - non_type_as_type_argument
+  error - Undefined class 'SubscriptionModel' - lib\features\subscriptions\presentation\providers\subscription_provider.dart:31:20 - undefined_class
+   info - The member 'update' overrides an inherited member but isn't annotated with '@override' - lib\features\subscriptions\presentation\providers\subscription_provider.dart:36:16 - annotate_overrides
+  error - 'SubscriptionListNotifier.update' ('Future<void> Function(InvalidType)') isn't a valid override of '$AsyncClassModifier.update' ('Future<List<InvalidType>> Function(FutureOr<List<InvalidType>> Function(List<InvalidType>), {FutureOr<List<InvalidType>> Function(Object, StackTrace)? onError})') - lib\features\subscriptions\presentation\providers\subscription_provider.dart:36:16 - invalid_override
+  error - Undefined class 'SubscriptionModel' - lib\features\subscriptions\presentation\providers\subscription_provider.dart:36:23 - undefined_class
+   info - The parameter name 'sub' doesn't match the name 'cb' in the overridden method - lib\features\subscriptions\presentation\providers\subscription_provider.dart:36:41 - avoid_renaming_method_parameters
+  error - The property 'isActive' can't be unconditionally accessed because the receiver can be 'null' - lib\features\subscriptions\presentation\screens\subscription_screen.dart:66:46 - unchecked_use_of_nullable_value
+  error - The property 'isActive' can't be unconditionally accessed because the receiver can be 'null' - lib\features\subscriptions\presentation\screens\subscription_screen.dart:67:49 - unchecked_use_of_nullable_value
+  error - The argument type 'Object?' can't be assigned to the parameter type 'SubscriptionModel'.  - lib\features\subscriptions\presentation\screens\subscription_screen.dart:118:52 - argument_type_not_assignable
+  error - The argument type 'Object?' can't be assigned to the parameter type 'SubscriptionModel'.  - lib\features\subscriptions\presentation\screens\subscription_screen.dart:130:54 - argument_type_not_assignable
+   info - 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre - lib\features\subscriptions\presentation\screens\subscription_screen.dart:404:19 - deprecated_member_use
+   info - 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre - lib\features\subscriptions\presentation\screens\subscription_screen.dart:422:19 - deprecated_member_use
+  error - Target of URI doesn't exist: '../../../core/database/database_helper.dart' - lib\features\wallets\data\repositories\wallet_repository.dart:1:8 - uri_does_not_exist
+  error - Target of URI doesn't exist: 'models/wallet_model.dart' - lib\features\wallets\data\repositories\wallet_repository.dart:2:8 - uri_does_not_exist
+  error - The name 'WalletModel' isn't a type, so it can't be used as a type argument - lib\features\wallets\data\repositories\wallet_repository.dart:5:15 - non_type_as_type_argument
+  error - Undefined name 'DatabaseHelper' - lib\features\wallets\data\repositories\wallet_repository.dart:6:22 - undefined_identifier
+  error - Undefined name 'WalletModel' - lib\features\wallets\data\repositories\wallet_repository.dart:8:21 - undefined_identifier
+  error - Undefined class 'WalletModel' - lib\features\wallets\data\repositories\wallet_repository.dart:11:23 - undefined_class
+  error - Undefined name 'DatabaseHelper' - lib\features\wallets\data\repositories\wallet_repository.dart:12:22 - undefined_identifier
+  error - Undefined class 'WalletModel' - lib\features\wallets\data\repositories\wallet_repository.dart:16:23 - undefined_class
+  error - Undefined name 'DatabaseHelper' - lib\features\wallets\data\repositories\wallet_repository.dart:17:22 - undefined_identifier
+  error - Undefined name 'DatabaseHelper' - lib\features\wallets\data\repositories\wallet_repository.dart:23:22 - undefined_identifier
+  error - Target of URI doesn't exist: '../data/models/wallet_model.dart' - lib\features\wallets\presentation\providers\wallet_provider.dart:2:8 - uri_does_not_exist
+  error - Target of URI doesn't exist: '../data/repositories/wallet_repository.dart' - lib\features\wallets\presentation\providers\wallet_provider.dart:3:8 - uri_does_not_exist
+  error - The function 'WalletRepository' isn't defined - lib\features\wallets\presentation\providers\wallet_provider.dart:5:50 - undefined_function
+  error - The name 'WalletModel' isn't a type, so it can't be used as a type argument - lib\features\wallets\presentation\providers\wallet_provider.dart:8:52 - non_type_as_type_argument
+  error - The function 'StateProvider' isn't defined - lib\features\wallets\presentation\providers\wallet_provider.dart:12:30 - undefined_function
+  error - The name 'WalletModel' isn't a type, so it can't be used as a type argument - lib\features\wallets\presentation\providers\wallet_provider.dart:14:53 - non_type_as_type_argument
+  error - The name 'WalletModel' isn't a type, so it can't be used as a type argument - lib\features\wallets\presentation\providers\wallet_provider.dart:16:15 - non_type_as_type_argument
+  error - Undefined class 'WalletModel' - lib\features\wallets\presentation\providers\wallet_provider.dart:20:20 - undefined_class
+   info - The member 'update' overrides an inherited member but isn't annotated with '@override' - lib\features\wallets\presentation\providers\wallet_provider.dart:25:16 - annotate_overrides
+  error - 'WalletListNotifier.update' ('Future<void> Function(InvalidType)') isn't a valid override of '$AsyncClassModifier.update' ('Future<List<InvalidType>> Function(FutureOr<List<InvalidType>> Function(List<InvalidType>), {FutureOr<List<InvalidType>> Function(Object, StackTrace)? onError})') - lib\features\wallets\presentation\providers\wallet_provider.dart:25:16 - invalid_override
+  error - Undefined class 'WalletModel' - lib\features\wallets\presentation\providers\wallet_provider.dart:25:23 - undefined_class
+   info - The parameter name 'wallet' doesn't match the name 'cb' in the overridden method - lib\features\wallets\presentation\providers\wallet_provider.dart:25:35 - avoid_renaming_method_parameters
+   info - Unnecessary use of multiple underscores - lib\features\wallets\presentation\widgets\wallet_selector.dart:24:35 - unnecessary_underscores
+   info - Unnecessary use of multiple underscores - lib\features\wallets\presentation\widgets\wallet_selector.dart:99:18 - unnecessary_underscores
+

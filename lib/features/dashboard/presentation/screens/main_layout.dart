@@ -370,7 +370,7 @@ class _MainLayoutState extends ConsumerState<MainLayout> {
             notchMargin: 12,
             shape: const CircularNotchedRectangle(),
             child: SizedBox(
-              height: 70,
+              height: 80,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [

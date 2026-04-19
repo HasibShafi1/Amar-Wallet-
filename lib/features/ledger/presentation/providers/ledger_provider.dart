@@ -8,12 +8,18 @@ final ledgerListProvider =
     AsyncNotifierProvider<LedgerListNotifier, List<LedgerModel>>(
         LedgerListNotifier.new);
 
-final pendingLentProvider = FutureProvider<double>((ref) async {
-  return ref.read(ledgerRepositoryProvider).getPendingLentTotal();
+final pendingLentProvider = Provider<double>((ref) {
+  final entries = ref.watch(ledgerListProvider).value ?? [];
+  return entries
+      .where((e) => e.type == 'lent' && e.isPaid == false)
+      .fold(0.0, (sum, e) => sum + e.amount);
 });
 
-final pendingBorrowedProvider = FutureProvider<double>((ref) async {
-  return ref.read(ledgerRepositoryProvider).getPendingBorrowedTotal();
+final pendingBorrowedProvider = Provider<double>((ref) {
+  final entries = ref.watch(ledgerListProvider).value ?? [];
+  return entries
+      .where((e) => e.type == 'borrowed' && e.isPaid == false)
+      .fold(0.0, (sum, e) => sum + e.amount);
 });
 
 class LedgerListNotifier extends AsyncNotifier<List<LedgerModel>> {
