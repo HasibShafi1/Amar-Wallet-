@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../expenses/data/models/expense_model.dart';
+import '../../../income/data/models/income_model.dart';
+
 import '../../../../core/providers/settings_provider.dart';
 import '../../../expenses/presentation/providers/expense_provider.dart';
 import '../../../expenses/presentation/widgets/add_expense_bottom_sheet.dart';
@@ -192,33 +195,41 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                 const WalletSelector(),
                 const SizedBox(height: 16),
                 // ── Balance Card ──────────────────────────────────────────
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(32),
-                    gradient: LinearGradient(
-                      colors: [cs.primary, cs.secondary],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
+                GestureDetector(
+                  onTap: () => _showAdjustBalance(context, balance),
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(24),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(32),
+                      gradient: LinearGradient(
+                        colors: [cs.primary, cs.secondary],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: cs.primary.withValues(alpha: 0.3),
+                          blurRadius: 20,
+                          offset: const Offset(0, 10),
+                        )
+                      ],
                     ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: cs.primary.withValues(alpha: 0.3),
-                        blurRadius: 20,
-                        offset: const Offset(0, 10),
-                      )
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('AVAILABLE BALANCE',
-                          style: TextStyle(
-                              color: Colors.white.withValues(alpha: 0.7),
-                              fontSize: 11,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 1.5)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('AVAILABLE BALANCE',
+                                style: TextStyle(
+                                    color: Colors.white.withValues(alpha: 0.7),
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 1.5)),
+                            Icon(Icons.edit_note_rounded, color: Colors.white70, size: 18),
+                          ],
+                        ),
                       const SizedBox(height: 8),
                       FittedBox(
                         fit: BoxFit.scaleDown,
@@ -261,6 +272,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                       ),
                     ],
                   ),
+                ),
                 ),
                 const SizedBox(height: 20),
 
@@ -645,6 +657,38 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
       ),
     );
   }
+
+  void _showAdjustBalance(BuildContext context, double currentBalance) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => _AdjustBalanceSheet(
+        currentBalance: currentBalance,
+        onAdjust: (diff) {
+          if (diff > 0) {
+            ref.read(incomeListProvider.notifier).add(
+              IncomeModel(
+                source: 'Adjustment',
+                description: 'Manual balance adjustment',
+                amount: diff,
+                date: DateTime.now(),
+              )
+            );
+          } else if (diff < 0) {
+            ref.read(expenseListProvider.notifier).addExpense(
+              ExpenseModel(
+                category: 'Adjustment',
+                description: 'Manual balance adjustment',
+                amount: diff.abs(),
+                date: DateTime.now(),
+              )
+            );
+          }
+        },
+      ),
+    );
+  }
 }
 
 class _MiniStat extends StatelessWidget {
@@ -708,11 +752,15 @@ class _SummaryActionCard extends StatelessWidget {
             child: Icon(icon, color: color, size: 20),
           ),
           const SizedBox(height: 12),
-          Text('$sym${value.toStringAsFixed(0)}',
-              style: TextStyle(
-                  color: cs.onSurface,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold)),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Text('$sym${value.toStringAsFixed(0)}',
+                style: TextStyle(
+                    color: cs.onSurface,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold)),
+          ),
           Text(label, style: TextStyle(color: cs.onSurfaceVariant, fontSize: 12)),
         ]),
       ),
@@ -767,4 +815,98 @@ class _DayData {
   final DateTime day;
   final double total;
   _DayData({required this.day, required this.total});
+}
+
+class _AdjustBalanceSheet extends StatefulWidget {
+  final double currentBalance;
+  final void Function(double diff) onAdjust;
+  const _AdjustBalanceSheet({required this.currentBalance, required this.onAdjust});
+
+  @override
+  State<_AdjustBalanceSheet> createState() => _AdjustBalanceSheetState();
+}
+
+class _AdjustBalanceSheetState extends State<_AdjustBalanceSheet> {
+  late final TextEditingController _ctrl;
+
+  @override
+  void initState() {
+    super.initState();
+    _ctrl = TextEditingController(text: widget.currentBalance.toStringAsFixed(0));
+  }
+
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    return Padding(
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: Container(
+        decoration: BoxDecoration(
+          color: cs.surface,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+        ),
+        padding: const EdgeInsets.fromLTRB(24, 16, 24, 32),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Container(
+                width: 44, height: 4,
+                decoration: BoxDecoration(
+                  color: cs.outlineVariant,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Text('Adjust Balance',
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.bold, color: cs.onSurface)),
+            const SizedBox(height: 8),
+            Text('Enter your actual current balance. The app will add an adjustment record to match.',
+                style: TextStyle(color: cs.onSurfaceVariant, fontSize: 13)),
+            const SizedBox(height: 20),
+            TextField(
+              controller: _ctrl,
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              style: TextStyle(color: cs.onSurface, fontSize: 24, fontWeight: FontWeight.bold),
+              decoration: InputDecoration(
+                labelText: 'New Balance',
+                prefixIcon: Icon(Icons.account_balance_wallet, color: cs.primary),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
+                filled: true,
+                fillColor: cs.surfaceContainerLowest,
+              ),
+            ),
+            const SizedBox(height: 24),
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton.icon(
+                onPressed: () {
+                  final newBal = double.tryParse(_ctrl.text.trim());
+                  if (newBal != null) {
+                    widget.onAdjust(newBal - widget.currentBalance);
+                    Navigator.pop(context);
+                  }
+                },
+                icon: const Icon(Icons.check),
+                label: const Text('Save Adjustment'),
+                style: FilledButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
