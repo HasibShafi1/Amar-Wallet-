@@ -153,12 +153,8 @@ class VoiceServiceNotifier extends Notifier<VoiceState> {
       listenFor: const Duration(seconds: 60),
       pauseFor: const Duration(seconds: 8),
       localeId: localeId,
-      listenOptions: SpeechListenOptions(
-        listenMode: ListenMode.dictation,
-        partialResults: true,
-        cancelOnError: true,
-        enableHapticFeedback: false,
-      ),
+      cancelOnError: true,
+      partialResults: true,
     );
   }
 

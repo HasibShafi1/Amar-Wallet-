@@ -105,17 +105,27 @@ Return ONLY a valid JSON array. No markdown, no explanation.
     }
   }
 
+  double _parseAmount(dynamic val) {
+    if (val == null) return 0.0;
+    if (val is num) return val.toDouble();
+    if (val is String) {
+      final s = val.replaceAll(RegExp(r'[^0-9.]'), '');
+      return double.tryParse(s) ?? 0.0;
+    }
+    return 0.0;
+  }
+
   List<VoiceAction> _mapToActions(List<dynamic> list) {
     final engine = CategoryEngine.instance;
     final results = <VoiceAction>[];
     final now = DateTime.now();
 
     for (final item in list) {
-      final intentType = item['intentType'] as String? ?? 'expense';
+      final intentType = (item['intentType'] as String? ?? 'expense').toLowerCase();
       switch (intentType) {
         case 'income':
           results.add(IncomeAction(IncomeModel(
-            amount: (item['amount'] as num).toDouble(),
+            amount: _parseAmount(item['amount']),
             source: item['source'] as String? ?? 'Other',
             description: item['description'] as String? ?? 'Income',
             date: now,
@@ -124,7 +134,7 @@ Return ONLY a valid JSON array. No markdown, no explanation.
           results.add(LedgerAction(LedgerModel(
             type: 'lent',
             person: item['person'] as String? ?? 'Unknown',
-            amount: (item['amount'] as num).toDouble(),
+            amount: _parseAmount(item['amount']),
             note: item['note'] as String? ?? '',
             date: now,
           )));
@@ -132,7 +142,7 @@ Return ONLY a valid JSON array. No markdown, no explanation.
           results.add(LedgerAction(LedgerModel(
             type: 'borrowed',
             person: item['person'] as String? ?? 'Unknown',
-            amount: (item['amount'] as num).toDouble(),
+            amount: _parseAmount(item['amount']),
             note: item['note'] as String? ?? '',
             date: now,
           )));
@@ -142,7 +152,7 @@ Return ONLY a valid JSON array. No markdown, no explanation.
           final category = engine.resolveCategory(description, aiCategory);
           results.add(ExpenseAction([
             ExpenseModel(
-              amount: (item['amount'] as num).toDouble(),
+              amount: _parseAmount(item['amount']),
               category: category,
               description: description,
               date: now,
