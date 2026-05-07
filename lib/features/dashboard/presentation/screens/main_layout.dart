@@ -1,8 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../core/constants/theme.dart';
 import '../../../../core/providers/settings_provider.dart';
+import '../../../../core/utils/toast_helper.dart';
 import '../../../../core/utils/voice_command_parser.dart';
 import '../../../voice/voice_service.dart';
 import '../../../voice/presentation/widgets/voice_pulse_button.dart';
@@ -79,23 +79,7 @@ class _MainLayoutState extends ConsumerState<MainLayout> {
           (previous == null || previous.errorMessage != next.errorMessage)) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Row(children: [
-                  const Icon(Icons.mic_off, color: Colors.white, size: 20),
-                  const SizedBox(width: 12),
-                  Expanded(child: Text(next.errorMessage)),
-                ]),
-                backgroundColor: AmarTheme.error,
-                duration: const Duration(seconds: 5),
-                action: SnackBarAction(
-                  label: 'Retry',
-                  textColor: Colors.white70,
-                  onPressed: () =>
-                      ref.read(voiceServiceProvider.notifier).startListening(),
-                ),
-              ),
-            );
+            ToastHelper.show(context, next.errorMessage, isError: true);
           }
         });
       }
@@ -109,9 +93,7 @@ class _MainLayoutState extends ConsumerState<MainLayout> {
         final expenses = ref.read(expenseListProvider).asData?.value ?? [];
         if (expenses.isNotEmpty) {
           ref.read(expenseListProvider.notifier).deleteExpense(expenses.first.id);
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('↩️ Last expense undone'), duration: Duration(seconds: 2)),
-          );
+          ToastHelper.show(context, '↩️ Last expense undone');
         }
         // Resume continuous if needed
         if (wasInContinuous) {
@@ -148,12 +130,7 @@ class _MainLayoutState extends ConsumerState<MainLayout> {
     } else {
       final locale = ref.read(settingsProvider).voiceLanguage;
       notifier.startListening(continuous: true, localeId: locale);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('🔴 Continuous mode — say expenses one by one. Long-press to stop.'),
-          duration: Duration(seconds: 3),
-        ),
-      );
+      ToastHelper.show(context, '🔴 Continuous mode — say expenses one by one. Long-press to stop.');
     }
   }
 
@@ -182,9 +159,7 @@ class _MainLayoutState extends ConsumerState<MainLayout> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e')),
-        );
+        ToastHelper.show(context, 'Error: $e', isError: true);
       }
     } finally {
       if (mounted) setState(() => _isProcessingAI = false);
@@ -204,13 +179,7 @@ class _MainLayoutState extends ConsumerState<MainLayout> {
             parsedExpenses: expenses,
             onConfirm: (confirmed) {
               ref.read(expenseListProvider.notifier).addMultiple(confirmed);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('✅ ${confirmed.length} expense(s) saved!'),
-                  backgroundColor: Colors.green.shade700,
-                  duration: const Duration(seconds: 2),
-                ),
-              );
+              ToastHelper.show(context, '✅ ${confirmed.length} expense(s) saved!');
             },
           ),
         );
@@ -218,25 +187,14 @@ class _MainLayoutState extends ConsumerState<MainLayout> {
       case IncomeAction(:final income):
         await ref.read(incomeListProvider.notifier).add(income);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('💰 Income ৳${income.amount.toStringAsFixed(0)} (${income.source}) saved!'),
-              backgroundColor: Colors.green.shade700,
-              duration: const Duration(seconds: 2),
-            ),
-          );
+          ToastHelper.show(context, '💰 Income ৳${income.amount.toStringAsFixed(0)} (${income.source}) saved!');
         }
 
       case LedgerAction(:final entry):
         await ref.read(ledgerListProvider.notifier).add(entry);
         if (mounted) {
           final label = entry.type == 'lent' ? '⬆️ Lent' : '⬇️ Borrowed';
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('$label ৳${entry.amount.toStringAsFixed(0)} ${entry.type == "lent" ? "to" : "from"} ${entry.person}'),
-              duration: const Duration(seconds: 2),
-            ),
-          );
+          ToastHelper.show(context, '$label ৳${entry.amount.toStringAsFixed(0)} ${entry.type == "lent" ? "to" : "from"} ${entry.person}');
         }
     }
   }

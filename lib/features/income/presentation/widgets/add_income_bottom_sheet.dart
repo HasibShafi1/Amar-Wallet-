@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/models/income_model.dart';
+import '../../../../core/utils/toast_helper.dart';
 import '../providers/income_provider.dart';
 
 const _sources = ['Salary', 'Freelance', 'Business', 'Other'];
@@ -28,8 +29,7 @@ class _AddIncomeBottomSheetState extends ConsumerState<AddIncomeBottomSheet> {
   void _save() async {
     final amount = double.tryParse(_amountCtrl.text.trim());
     if (amount == null || amount <= 0) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('Enter a valid amount')));
+      ToastHelper.show(context, 'Enter a valid amount', isError: true);
       return;
     }
     final income = IncomeModel(

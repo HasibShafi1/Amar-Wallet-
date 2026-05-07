@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import '../../../../core/providers/settings_provider.dart';
 import '../providers/expense_provider.dart';
 import '../widgets/add_expense_bottom_sheet.dart';
+import '../../../../core/utils/toast_helper.dart';
 import 'edit_expense_screen.dart';
 
 class ExpenseHistoryScreen extends ConsumerStatefulWidget {
@@ -310,12 +311,7 @@ class _ExpenseHistoryScreenState extends ConsumerState<ExpenseHistoryScreen> {
                               },
                               onDismissed: (_) {
                                 ref.read(expenseListProvider.notifier).deleteExpense(exp.id);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text('"${exp.description}" deleted'),
-                                    action: SnackBarAction(label: 'OK', onPressed: () {}),
-                                  ),
-                                );
+                                ToastHelper.show(context, '"${exp.description}" deleted');
                               },
                               // Tap to edit
                               child: InkWell(

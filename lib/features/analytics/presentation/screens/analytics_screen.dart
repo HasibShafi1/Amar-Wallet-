@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/providers/settings_provider.dart';
+import '../../../../core/utils/toast_helper.dart';
 import '../../../expenses/presentation/providers/expense_provider.dart';
 import '../../../income/presentation/providers/income_provider.dart';
 import '../../../budget/presentation/providers/budget_provider.dart';
@@ -109,9 +110,7 @@ class _AnalyticsScreenState extends ConsumerState<AnalyticsScreen>
     }
 
     Clipboard.setData(ClipboardData(text: buffer.toString()));
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('📋 Report copied to clipboard!')),
-    );
+    ToastHelper.show(context, '📋 Report copied to clipboard!');
   }
 
   static const List<Color> _chartColors = [

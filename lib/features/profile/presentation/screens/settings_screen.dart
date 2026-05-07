@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/providers/settings_provider.dart';
+import '../../../../core/utils/toast_helper.dart';
 import '../../../ai/ai_service.dart';
 import '../../../budget/data/models/budget_model.dart';
 import '../../../budget/presentation/providers/budget_provider.dart';
@@ -29,9 +30,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     if (key.isEmpty) return;
     await ref.read(aiServiceProvider).saveApiKey(key);
     if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('✅ API Key saved securely')),
-      );
+      ToastHelper.show(context, '✅ API Key saved securely');
       _keyController.clear();
       FocusScope.of(context).unfocus();
       setState(() => _keyStatus = null);
@@ -41,9 +40,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   Future<void> _testKey() async {
     final key = _keyController.text.trim();
     if (key.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Enter a key first to test')),
-      );
+      ToastHelper.show(context, 'Enter a key first to test');
       return;
     }
     setState(() { _isTestingKey = true; _keyStatus = null; });

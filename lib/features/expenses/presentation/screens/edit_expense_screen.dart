@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/models/expense_model.dart';
+import '../../../../core/utils/toast_helper.dart';
 import '../providers/expense_provider.dart';
 import '../widgets/tag_chip_input.dart';
 
@@ -68,7 +69,7 @@ class _EditExpenseScreenState extends ConsumerState<EditExpenseScreen> {
     if (_formKey.currentState!.validate()) {
       final amount = double.tryParse(_amountController.text.replaceAll(',', '')) ?? 0.0;
       if (amount <= 0) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Amount must be greater than 0')));
+        ToastHelper.show(context, 'Amount must be greater than 0', isError: true);
         return;
       }
       final updated = widget.expense.copyWith(
